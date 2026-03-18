@@ -2,7 +2,10 @@ import { Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-// Placeholder components - we will build these next!
+// Naya Register page import kiya hai
+import Register from "./pages/Register";
+
+// Placeholder components
 const Dashboard = () => (
   <div>
     <h2>Dashboard</h2>
@@ -12,6 +15,7 @@ const Dashboard = () => (
 const Login = () => (
   <div>
     <h2>Login Page</h2>
+    <p>Login form will go here...</p>
   </div>
 );
 const Products = () => (
@@ -25,14 +29,14 @@ function App() {
     <div>
       <ToastContainer position="top-right" autoClose={3000} />
 
-      {/* Navigation will go here later */}
-      <nav style={{ padding: "10px", background: "#eee" }}>
-        <h2>ERP System</h2>
+      <nav style={{ padding: "15px", background: "#333", color: "#fff" }}>
+        <h2 style={{ margin: 0 }}>ERP Management System</h2>
       </nav>
 
       <div style={{ padding: "20px" }}>
         <Routes>
           <Route path="/" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/products" element={<Products />} />
         </Routes>

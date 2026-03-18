@@ -1,3 +1,4 @@
+import authRoutes from "./routes/authRoutes.js";
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
@@ -12,9 +13,8 @@ const app = express();
 
 // Middleware
 app.use(cors());
-app.use(express.json()); // Allows parsing of JSON data in the body
-
-// Basic Route for testing
+app.use(express.json());
+app.use("/api/users", authRoutes);
 app.get("/api", (req, res) => {
   res.send("ERP Backend API is running...");
 });
