@@ -1,8 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-// Naya Register page import kiya hai
+import Login from "./pages/Login";
 import Register from "./pages/Register";
 
 // Placeholder components
