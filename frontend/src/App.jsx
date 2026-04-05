@@ -1,46 +1,60 @@
 import { Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "./App.css"; // Importing the professional CSS
+
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Products from "./pages/Products";
+import Layout from "./components/Layout";
 
-// Placeholder components
 const Dashboard = () => (
   <div>
-    <h2>Dashboard</h2>
-    <p>Welcome to the ERP System</p>
+    <h2>Dashboard Analytics (Coming Soon)</h2>
   </div>
 );
-const Login = () => (
+const Customers = () => (
   <div>
-    <h2>Login Page</h2>
-    <p>Login form will go here...</p>
-  </div>
-);
-const Products = () => (
-  <div>
-    <h2>Product Management</h2>
+    <h2>Customer & Supplier Directory (Coming Soon)</h2>
   </div>
 );
 
 function App() {
   return (
-    <div>
-      <ToastContainer position="top-right" autoClose={3000} />
+    <>
+      <ToastContainer position="top-right" autoClose={3000} theme="colored" />
+      <Routes>
+        {/* Public Routes */}
+        <Route path="/" element={<Login />} />
+        <Route path="/register" element={<Register />} />
 
-      <nav style={{ padding: "15px", background: "#333", color: "#fff" }}>
-        <h2 style={{ margin: 0 }}>ERP Management System</h2>
-      </nav>
-
-      <div style={{ padding: "20px" }}>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/products" element={<Products />} />
-        </Routes>
-      </div>
-    </div>
+        {/* Protected Routes wrapped in Layout */}
+        <Route
+          path="/dashboard"
+          element={
+            <Layout>
+              <Dashboard />
+            </Layout>
+          }
+        />
+        <Route
+          path="/products"
+          element={
+            <Layout>
+              <Products />
+            </Layout>
+          }
+        />
+        <Route
+          path="/customers"
+          element={
+            <Layout>
+              <Customers />
+            </Layout>
+          }
+        />
+      </Routes>
+    </>
   );
 }
 
