@@ -2,14 +2,14 @@ import mongoose from "mongoose";
 
 const orderSchema = new mongoose.Schema(
   {
-    orderType: {
-      type: String,
-      enum: ["Sales", "Purchase"],
+    customer: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Customer",
       required: true,
     },
-    party: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Customer", // Links to Customer/Supplier model
+    orderType: {
+      type: String,
+      enum: ["Sale", "Purchase"],
       required: true,
     },
     items: [
@@ -19,20 +19,15 @@ const orderSchema = new mongoose.Schema(
           ref: "Product",
           required: true,
         },
-        quantity: { type: Number, required: true },
-        price: { type: Number, required: true }, // Price at the time of order
+        quantity: { type: Number, required: true, min: 1 },
+        price: { type: Number, required: true }, // Locked-in price at time of order
       },
     ],
-    totalAmount: { type: Number, required: true },
+    totalAmount: { type: Number, required: true, default: 0 },
     status: {
       type: String,
-      enum: ["Pending", "Completed", "Cancelled"],
+      enum: ["Pending", "Processing", "Completed", "Cancelled"],
       default: "Pending",
-    },
-    preparedBy: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
     },
   },
   { timestamps: true },

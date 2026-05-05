@@ -2,13 +2,13 @@ import express from "express";
 import {
   getOrders,
   createOrder,
-  updateOrderStatus,
+  deleteOrder,
 } from "../controllers/orderController.js";
 import { protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
 router.route("/").get(protect, getOrders).post(protect, createOrder);
-router.route("/:id/status").put(protect, updateOrderStatus);
+router.route("/:id").delete(protect, deleteOrder);
 
 export default router;

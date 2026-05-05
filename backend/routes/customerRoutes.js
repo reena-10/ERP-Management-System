@@ -2,12 +2,14 @@ import express from "express";
 import {
   getCustomers,
   createCustomer,
+  deleteCustomer,
 } from "../controllers/customerController.js";
 import { protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-// protect middleware ensure karega ki sirf logged-in user hi in API ko use kar sake
+// Protect all customer routes
 router.route("/").get(protect, getCustomers).post(protect, createCustomer);
+router.route("/:id").delete(protect, deleteCustomer);
 
 export default router;

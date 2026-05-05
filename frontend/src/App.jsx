@@ -1,60 +1,62 @@
-import { Routes, Route } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import "./App.css"; // Importing the professional CSS
-
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Products from "./pages/Products";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { ThemeProvider, createTheme, CssBaseline } from "@mui/material";
 import Layout from "./components/Layout";
+import Login from "./pages/Login";
+import Products from "./pages/Products";
+import Customers from "./pages/Customers";
+import Orders from "./pages/Orders";
+import GRN from "./pages/GRN";
 
-const Dashboard = () => (
-  <div>
-    <h2>Dashboard Analytics (Coming Soon)</h2>
-  </div>
-);
-const Customers = () => (
-  <div>
-    <h2>Customer & Supplier Directory (Coming Soon)</h2>
-  </div>
-);
+const theme = createTheme({
+  palette: { primary: { main: "#1976d2" }, background: { default: "#f4f6f8" } },
+});
+
+// Simple auth check
+const PrivateRoute = ({ children }) => {
+  const userInfo = localStorage.getItem("userInfo");
+  return userInfo ? children : <Navigate to="/login" />;
+};
 
 function App() {
   return (
-    <>
-      <ToastContainer position="top-right" autoClose={3000} theme="colored" />
-      <Routes>
-        {/* Public Routes */}
-        <Route path="/" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Router>
+        <Routes>
+          <Route path="/login" element={<Login />} />
 
-        {/* Protected Routes wrapped in Layout */}
-        <Route
-          path="/dashboard"
-          element={
-            <Layout>
-              <Dashboard />
-            </Layout>
-          }
-        />
-        <Route
-          path="/products"
-          element={
-            <Layout>
-              <Products />
-            </Layout>
-          }
-        />
-        <Route
-          path="/customers"
-          element={
-            <Layout>
-              <Customers />
-            </Layout>
-          }
-        />
-      </Routes>
-    </>
+          <Route
+            path="/"
+            element={
+              <PrivateRoute>
+                <Layout />
+              </PrivateRoute>
+            }
+          >
+            <Route
+              index
+              element={
+                <div style={{ padding: 20 }}>
+                  <h1>Dashboard (WIP)</h1>
+                </div>
+              }
+            />
+            <Route path="products" element={<Products />} />
+
+            <Route path="customers" element={<Customers />} />
+
+            <Route path="orders" element={<Orders />} />
+
+            <Route path="grn" element={<GRN />} />
+          </Route>
+        </Routes>
+      </Router>
+    </ThemeProvider>
   );
 }
 
